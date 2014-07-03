@@ -1,0 +1,417 @@
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Knob</title>
+	<style type="text/css">
+		div {
+			margin: 0;
+			padding: 0;
+		}
+		.title {
+			text-align: center;
+		}
+		.wrap {
+			width: 336px;
+			height: 336px;
+			margin: 50px auto;
+			padding: 50px;
+			background: #d1dbd8;
+		}
+		.outer {
+			position: relative;
+			width: 336px;
+			height: 336px;
+			border: 1px solid rgba(0, 0, 0, 0.1);
+			border-radius: 336px;
+			box-sizing: border-box;
+			background: -webkit-linear-gradient(-13deg, #e6eae5, #f0f1eb);
+			background: linear-gradient(167deg, #e6eae5, #f0f1eb);
+		}
+		.outer-dark {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			width: 306px;
+			height: 306px;
+			margin: -153px 0 0 -153px;
+			border: 2px solid rgba(0, 0, 0, 0.64);
+			border-radius: 306px;
+			box-sizing: border-box;
+			background: -webkit-linear-gradient(180deg, #26272b, #3f4246);
+			background: linear-gradient(to top, #26272b, #3f4246);
+		}
+		.outer-dark:before {
+			content: "";
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			z-index: 2;
+			width: 302px;
+			height: 302px;
+			margin: -151px 0 0 -151px;
+			border-radius: 302px;
+			background: -webkit-linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+			background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+			-webkit-transform: rotate(-45deg);
+			-moz-transform: rotate(-45deg);
+			transform: rotate(-45deg);
+		}
+		.outer-dark:after {
+			content: "";
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			z-index: 2;
+			width: 296px;
+			height: 296px;
+			margin: -148px 0 0 -148px;
+			border-radius: 296px;
+			background: -webkit-linear-gradient(0, #26272b, #3f4246);
+			background: linear-gradient(to bottom, #26272b, #3f4246);
+			box-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+			-webkit-transform: rotate(-45deg);
+			-moz-transform: rotate(-45deg);
+			transform: rotate(-45deg);
+		}
+		.inner-outline {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			z-index: 3;
+			width: 236px;
+			height: 236px;
+			margin: -118px 0 0 -118px;
+			border: 3px solid rgba(0, 0, 0, 0.73);
+			border-radius: 236px;
+			box-sizing: border-box;
+			background: -webkit-linear-gradient(0, #3f4246, #26272b);
+			background: linear-gradient(to bottom, #3f4246, #26272b);
+			box-shadow: 1px 1px 0 rgba(184, 200, 200, 0.28);
+		}
+		.inner-outline:before {
+			content: "";
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			z-index: 3;
+			width: 228px;
+			height: 228px;
+			margin: -114px 0 0 -114px;
+			border-radius: 228px;
+			box-shadow: -1px -1px 0 rgba(184, 200, 200, 0.28);
+			background: -webkit-linear-gradient(0, #3f4246, #26272b);
+			background: linear-gradient(to bottom, #3f4246, #26272b);
+		}
+		.inner-shadow {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			z-index: 4;
+			width: 228px;
+			height: 228px;
+			margin: -114px 0 0 -114px;
+			border-radius: 228px;
+			background: -webkit-radial-gradient(circle, rgba(4, 3, 1, 1), rgba(0, 0, 0, 0));
+			background: radial-gradient(circle 114px, rgba(4, 3, 1, 1), rgba(0, 0, 0, 0));
+		}
+		.inner-shadow:after {
+			content: "";
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			z-index: 3;
+			width: 300px;
+			height: 300px;
+			margin: -130px 0 0 -80px;
+			border-radius: 200px;
+			background: radial-gradient(circle 100px, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+			-webkit-transform: rotate(45deg);
+			-moz-transform: rotate(45deg);
+			transform: rotate(45deg);
+		}
+		.inner {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			z-index: 4;
+			width: 188px;
+			height: 188px;
+			margin: -94px 0 0 -94px;
+			border-radius: 188px;
+			background: -webkit-linear-gradient(-30deg, #3e4044, #24252a);
+			background: linear-gradient(150deg, #3e4044, #24252a);
+			box-shadow: 1px 1px 1px #000;
+		}
+		.inner:after {
+			content: "";
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			z-index: 2;
+			width: 188px;
+			height: 188px;
+			margin: -94px 0 0 -94px;
+			border-radius: 188px;
+			background: none;
+			box-shadow: -1px -1px 1px rgba(211, 228, 234, 0.51);
+		}
+		.inner-panel, .light-panel {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			z-index: 4;
+			width: 188px;
+			height: 188px;
+			margin: -94px 0 0 -94px;
+			border-radius: 188px;
+			cursor: pointer;
+			background: none;
+		}
+		 .light-panel {
+		 	-webkit-transform: rotate(-75deg);
+		 	-moz-transform: rotate(-75deg);
+		 	transform: rotate(-75deg);
+		 }
+		.light {
+			position: absolute;
+			left: 50%;
+			top: 13px;
+			width: 11px;
+			height: 34px;
+			margin-left: -5.5px;
+			border: 1px solid #cc5800;
+			background: #ff9c00;
+			background: -webkit-radial-gradient(ellipse 11px 34px, #ffffbe, #ff9c00);
+			background: radial-gradient(ellipse 11px 34px, #ffffbe, #ff9c00);
+			border-radius: 11px;
+			box-shadow: 0 0 15px #fe4e09;
+			pointer-events: none;
+		}
+		.dots {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			z-index: 3;
+			width: 306px;
+			height: 306px;
+			margin: -153px 0 0 -153px;
+			border-radius: 306px;
+			pointer-events: none;
+			background: none;
+		}
+		.dot {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			width: 10px;
+			height: 10px;
+			margin: -5px 0 0 -5px;
+			border-radius: 10px;
+			box-sizing: border-box;
+			background-color: #2b2d30;
+			-webkit-transform: translate(0, -132px);
+			-moz-transform: translate(0, -132px);
+			transform: translate(0, -132px);
+			-webkit-transform-origin: 4px 137px;
+			-moz-transform-origin: 4px 137px;
+			transform-origin: 4px 137px;
+		}
+		.dot:before {
+			content: "";
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			z-index: 2;
+			width: 10px;
+			height: 10px;
+			margin: -4px 0 0 -4px;
+			border-radius: 10px;
+			background: none;
+			box-shadow: -1px -1px 1px rgba(0, 0, 0, 0.51);
+		}
+		.dot:after {
+			content: "";
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			z-index: 2;
+			width: 9px;
+			height: 9px;
+			margin: -4.5px 0 0 -4.5px;
+			border-radius: 9px;
+			background: none;
+			box-shadow: 1px 1px 1px rgba(211, 228, 234, 0.51);
+		}
+		.dot-hover {
+			border: 1px solid #404145;
+			background: #e7a847;
+			background: -webkit-radial-gradient(circle, #ffffbe, #e7a847);
+			background: radial-gradient(circle, #ffffbe, #e7a847);
+			box-shadow:  0 0 15px #fe7c09;
+		}
+		.dot-hover:before, .dot-hover:after {
+			display: none;
+		}
+		.dot1 {
+			-webkit-transform: translate(0, -132px) rotate(-75deg);
+			-moz-transform: translate(0, -132px) rotate(-75deg);
+			-ms-transform: translate(0, -132px) rotate(-75deg);
+			transform: translate(0, -132px) rotate(-75deg);
+		}
+		.dot2 {
+			-webkit-transform: translate(0, -132px) rotate(-60deg);
+			-moz-transform: translate(0, -132px) rotate(-60deg);
+			-ms-transform: translate(0, -132px) rotate(-60deg);
+			transform: translate(0, -132px) rotate(-60deg);
+		}
+		.dot3 {
+			-webkit-transform: translate(0, -132px) rotate(-45deg);
+			-moz-transform: translate(0, -132px) rotate(-45deg);
+			-ms-transform: translate(0, -132px) rotate(-45deg);
+			transform: translate(0, -132px) rotate(-45deg);
+		}
+		.dot4 {
+			-webkit-transform: translate(0, -132px) rotate(-30deg);
+			-moz-transform: translate(0, -132px) rotate(-30deg);
+			-ms-transform: translate(0, -132px) rotate(-30deg);
+			transform: translate(0, -132px) rotate(-30deg);
+		}
+		.dot5 {
+			-webkit-transform: translate(0, -132px) rotate(-15deg);
+			-moz-transform: translate(0, -132px) rotate(-15deg);
+			-ms-transform: translate(0, -132px) rotate(-15deg);
+			transform: translate(0, -132px) rotate(-15deg);
+		}
+		.dot6 {
+			-webkit-transform: translate(0, -132px) rotate(0);
+			-moz-transform: translate(0, -132px) rotate(0);
+			-ms-transform: translate(0, -132px) rotate(0);
+			transform: translate(0, -132px) rotate(0);
+		}
+		.dot7 {
+			-webkit-transform: translate(0, -132px) rotate(15deg);
+			-moz-transform: translate(0, -132px) rotate(15deg);
+			-ms-transform: translate(0, -132px) rotate(15deg);
+			transform: translate(0, -132px) rotate(15deg);
+		}
+		.dot8 {
+			-webkit-transform: translate(0, -132px) rotate(30deg);
+			-moz-transform: translate(0, -132px) rotate(30deg);
+			-ms-transform: translate(0, -132px) rotate(30deg);
+			transform: translate(0, -132px) rotate(30deg);
+		}
+		.dot9 {
+			-webkit-transform: translate(0, -132px) rotate(45deg);
+			-moz-transform: translate(0, -132px) rotate(45deg);
+			-ms-transform: translate(0, -132px) rotate(45deg);
+			transform: translate(0, -132px) rotate(45deg);
+		}
+		.dot10 {
+			-webkit-transform: translate(0, -132px) rotate(60deg);
+			-moz-transform: translate(0, -132px) rotate(60deg);
+			-ms-transform: translate(0, -132px) rotate(60deg);
+			transform: translate(0, -132px) rotate(60deg);
+		}
+		.dot11 {
+			-webkit-transform: translate(0, -132px) rotate(75deg);
+			-moz-transform: translate(0, -132px) rotate(75deg);
+			-ms-transform: translate(0, -132px) rotate(75deg);
+			transform: translate(0, -132px) rotate(75deg);
+		}
+	</style>
+</head>
+<body>
+<h1 class="title">Knob</h1>
+<div class="wrap">
+	<div class="outer">
+		<div class="outer-dark"></div>
+		<div class="dots">
+				<i class="dot dot1"></i>
+				<i class="dot dot2"></i>
+				<i class="dot dot3"></i>
+				<i class="dot dot4"></i>
+				<i class="dot dot5"></i>
+				<i class="dot dot6"></i>
+				<i class="dot dot7"></i>
+				<i class="dot dot8"></i>
+				<i class="dot dot9"></i>
+				<i class="dot dot10"></i>
+				<i class="dot dot11"></i>
+			</div>
+		<div class="inner-outline"></div>
+		<div class="inner-shadow"></div>
+		<div class="inner"></div>
+		<div class="light-panel">
+			<div class="light"></div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var	light = document.querySelector(".light-panel"),
+		dots = document.querySelectorAll(".dot"),
+		maxDeg = 15 / 36 * Math.PI,
+		stepDeg = 1 / 12 * Math.PI,
+		index = 0,
+		forEach = Array.prototype.forEach,
+		offset = light.getBoundingClientRect(),
+		center = {
+			x: offset.left + offset.width / 2,
+			y: offset.top + offset.height / 2
+		}
+
+
+	function mousemove(e) {
+		var deltaX = e.clientX - center.x,
+			deltaY = center.y - e.clientY,
+			deg = Math.asin(deltaX / Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2)));
+			
+		if (deltaY < 0) {
+			deg = (deltaX > 0 ? Math.PI : -Math.PI) - deg;
+		}
+
+		index = Math.floor(deg / stepDeg);
+
+		deg = index * stepDeg;
+
+		if (deg > maxDeg) {
+			deg = maxDeg;
+		} else if (deg < -maxDeg) {
+			deg = -maxDeg
+		}
+
+		light.style.webkitTransform = "rotate(" + deg + "rad)";
+		light.style.mozTransform = "rotate(" + deg + "rad)";
+		light.style.transform = "rotate(" + deg + "rad)";
+
+		index += 5;
+		forEach.call(dots, function(dot, i) {
+			var className = dot.className;
+			className = className.replace(/dot-hover/g, "");
+			className = className.replace(/(^\s+|\s+$)/g, "");
+			if (i <= index) {
+				className += " dot-hover";
+			}
+			dot.className = className;
+		});
+	}
+
+
+	function mousedown() {
+		document.addEventListener("mousemove", mousemove, false);
+		document.addEventListener("mouseup", mouseup, false);
+	}
+
+	function mouseup() {
+		document.removeEventListener("mousemove", mousemove, false);
+		document.removeEventListener("mouseup", mouseup, false);
+	}
+
+
+	light.addEventListener("mousedown", mousedown, false);
+
+
+
+</script>
+</body>
+</html>

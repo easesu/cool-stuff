@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>menu</title>
+    <style>
+        div {
+            margin: 0;
+            padding: 0;
+        }
+        .wrap {
+            width: 110px;
+            height: 72px;
+            margin: 50px auto;
+            padding: 195px 216px;
+            background-color: #23262a;
+            -webkit-transition: all 400ms;
+        }
+        .wrap-active {
+            background-color: #ffffff;
+            -webkit-transition: all 400ms;
+        }
+        /*初始状态*/
+        .menu {
+            position: relative;
+            display: block;
+            width: 110px;
+            height: 72px;
+        }
+        .menu:before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 200px;
+            height: 200px;
+            margin: -100px 0 0 -100px;
+            border-width: 10px;
+            border-style: solid;
+            border-color: rgba(255, 255, 255, 0);
+            pointer-events: none;
+            background: none;
+            -webkit-box-sizing: border-box;
+            -webkit-border-radius: 1000px;
+            -webkit-animation: circleOut 200ms forwards;
+
+        }
+
+        .menu:after, .bar {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 11px;
+            margin-top: -5.5px;
+            background-color: #fff;
+            -webkit-border-radius: 2px;
+            border-radius: 3px;
+            box-shadow: 0 0 4px #fff;
+        }
+        .menu:after {
+            content: "";
+            opacity: 1;
+            -webkit-transition: all 320ms;
+        }
+        .bar-top {
+            -webkit-transform: translate(0, -31px);
+            -webkit-transform: rotateX(0) rotateY(-180deg) rotateZ(-45deg) ;
+            -webkit-animation: barTopOut 320ms forwards;
+        }
+        .bar-bottom {
+            -webkit-transform: translate(0, 31px);
+            -webkit-transform: rotateX(0) rotateY(-180deg) rotateZ(45deg) ;
+            -webkit-animation: barBottomOut 320ms forwards;
+        }
+
+        /*激活状态*/
+        .menu:hover:before {
+            -webkit-animation: circleActive 200ms forwards;
+        }
+
+        .menu:hover:after {
+            opacity: 0;
+            -webkit-transform: translate(0, -31px);
+            -webkit-transition: all 320ms;
+        }
+
+        .menu:hover .bar-top {
+            -webkit-animation: barTopActive 320ms forwards;
+        }
+        .menu:hover .bar-bottom {
+            -webkit-animation: barBottomActive 320ms forwards;
+        }
+
+        @-webkit-keyframes circleActive {
+            0 {
+                border-color: rgba(255, 255, 255, 0);
+                -webkit-transform: scale(1, 1);
+            }
+            50% {
+                border-color: rgba(255, 255, 255, 1);
+            }
+            100% {
+                border-color: rgba(255, 255, 255, 0);
+                -webkit-transform: scale(2, 2);
+            }
+        }
+
+        @-webkit-keyframes barTopActive {
+            0 {
+                -webkit-transform: rotateX(0) rotateY(0) rotateZ(0);
+            }
+            50% {
+                -webkit-transform: rotateX(0) rotateY(-90deg) rotateZ(-90deg);
+            }
+            100% {
+                background-color: #000;
+                box-shadow: 0 0 2px #000;
+                -webkit-transform: rotateX(0) rotateY(-180deg) rotateZ(-45deg) ;
+            }
+        }
+
+        @-webkit-keyframes barBottomActive {
+            0 {
+                -webkit-transform: rotateX(0) rotateY(0) rotateZ(0);
+            }
+            50% {
+                -webkit-transform: rotateX(0) rotateY(-90deg) rotateZ(90deg);
+            }
+            100% {
+                background-color: #000;
+                box-shadow: 0 0 2px #000;
+                -webkit-transform: rotateX(0) rotateY(-180deg) rotateZ(45deg);
+            }
+        }
+
+
+        @-webkit-keyframes circleOut {
+	        0 {
+	            border-color: rgba(0, 0, 0, 0.5);
+	            -webkit-transform: scale(1, 1);
+	        }
+	        50% {
+	            border-color: rgba(0, 0, 0, 1);
+	        }
+	        100% {
+	            border-color: rgba(0, 0, 0, 0);
+	            -webkit-transform: scale(1.5, 1.5);
+	        }
+        }
+
+        @-webkit-keyframes barTopOut {
+	        100% {
+	            -webkit-transform: rotateX(0) rotateY(0) rotateZ(0) translate(0, -31px);
+	        }
+	        50% {
+	            -webkit-transform: rotateX(0) rotateY(-90deg) rotateZ(-90deg);
+	        }
+	        0 {
+	            -webkit-transform: rotateX(0) rotateY(-180deg) rotateZ(-45deg) ;
+	        }
+        }
+
+        @-webkit-keyframes barBottomOut {
+	        100% {
+	            -webkit-transform: rotateX(0) rotateY(0) rotateZ(0) translate(0, 31px);
+	        }
+	        50% {
+	            -webkit-transform: rotateX(0) rotateY(-90deg) rotateZ(90deg);
+	        }
+	        0 {
+	            -webkit-transform: rotateX(0) rotateY(-180deg) rotateZ(45deg) ;
+	        }
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="wrap">
+    <a class="menu menu-out" href="javascript:;">
+        <i class="bar bar-top"></i>
+        <i class="bar bar-bottom"></i>
+    </a>
+</div>
+
+<script>
+    var btn = document.querySelector(".menu");
+    var wrap = document.querySelector(".wrap");
+    btn.addEventListener("mouseover", function() {
+        wrap.className = "wrap wrap-active";
+    }, false);
+    btn.addEventListener("mouseout", function() {
+        wrap.className = "wrap";
+    }, false);
+</script>
+</body>
+</html>
