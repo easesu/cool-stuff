@@ -13,12 +13,6 @@
             height: 72px;
             margin: 50px auto;
             padding: 195px 216px;
-            background-color: #23262a;
-            -webkit-transition: all 400ms;
-        }
-        .wrap-active {
-            background-color: #ffffff;
-            -webkit-transition: all 400ms;
         }
         /*初始状态*/
         .menu {
@@ -43,7 +37,17 @@
             -webkit-box-sizing: border-box;
             -webkit-border-radius: 1000px;
             -webkit-animation: circleOut 200ms forwards;
-
+        }
+        .menu-bg {
+        	position: absolute;
+        	left: 50%;
+        	top: 50%;
+        	width: 542px;
+        	height: 462px;
+        	margin: -231px 0 0 -271px;
+        	pointer-events: none;
+        	background-color: #23262a;
+            -webkit-transition: all 400ms;
         }
 
         .menu:after, .bar {
@@ -75,6 +79,10 @@
         }
 
         /*激活状态*/
+        .menu:hover .menu-bg {
+            background-color: #ffffff;
+            -webkit-transition: all 400ms;
+        }
         .menu:hover:before {
             -webkit-animation: circleActive 200ms forwards;
         }
@@ -179,20 +187,10 @@
 
 <div class="wrap">
     <a class="menu menu-out" href="javascript:;">
+    	<i class="menu-bg"></i>
         <i class="bar bar-top"></i>
         <i class="bar bar-bottom"></i>
     </a>
 </div>
-
-<script>
-    var btn = document.querySelector(".menu");
-    var wrap = document.querySelector(".wrap");
-    btn.addEventListener("mouseover", function() {
-        wrap.className = "wrap wrap-active";
-    }, false);
-    btn.addEventListener("mouseout", function() {
-        wrap.className = "wrap";
-    }, false);
-</script>
 </body>
 </html>
