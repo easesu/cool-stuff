@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
+<head>
     <meta charset="UTF-8">
     <title>menu</title>
     <style>
@@ -24,6 +24,7 @@
         .menu:before {
             content: "";
             position: absolute;
+            z-index: 2;
             left: 50%;
             top: 50%;
             width: 200px;
@@ -34,12 +35,17 @@
             border-color: rgba(255, 255, 255, 0);
             pointer-events: none;
             background: none;
-            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
             -webkit-border-radius: 1000px;
+            -moz-border-radius: 1000px;
+            border-radius: 1000px;
             -webkit-animation: circleOut 200ms forwards;
+            -moz-animation: circleOut 200ms forwards;
+            animation: circleOut 200ms forwards;
         }
         .menu-bg {
         	position: absolute;
+        	z-index: 1;
         	left: 50%;
         	top: 50%;
         	width: 542px;
@@ -48,17 +54,21 @@
         	pointer-events: none;
         	background-color: #23262a;
             -webkit-transition: all 400ms;
+            -moz-transition: all 400ms;
+            transition: all 400ms;
         }
 
         .menu:after, .bar {
             position: absolute;
+            z-index: 2;
             top: 50%;
             left: 0;
             width: 100%;
             height: 11px;
             margin-top: -5.5px;
             background-color: #fff;
-            -webkit-border-radius: 2px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
             border-radius: 3px;
             box-shadow: 0 0 4px #fff;
         }
@@ -66,40 +76,61 @@
             content: "";
             opacity: 1;
             -webkit-transition: all 320ms;
+            -moz-transition: all 320ms;
+            transition: all 320ms;
         }
         .bar-top {
-            -webkit-transform: translate(0, -31px);
-            -webkit-transform: rotateX(0) rotateY(-180deg) rotateZ(-45deg) ;
+            -webkit-transform: translate(0, -31px) rotateX(0) rotateY(-180deg) rotateZ(-45deg);
+            -moz-transform: translate(0, -31px) rotateX(0) rotateY(-180deg) rotateZ(-45deg);
+            transform: translate(0, -31px) rotateX(0) rotateY(-180deg) rotateZ(-45deg);
             -webkit-animation: barTopOut 320ms forwards;
+            -moz-animation: barTopOut 320ms forwards;
+            animation: barTopOut 320ms forwards;
         }
         .bar-bottom {
-            -webkit-transform: translate(0, 31px);
-            -webkit-transform: rotateX(0) rotateY(-180deg) rotateZ(45deg) ;
+            -webkit-transform: translate(0, 31px) rotateX(0) rotateY(-180deg) rotateZ(45deg);
+            -moz-transform: translate(0, 31px) rotateX(0) rotateY(-180deg) rotateZ(45deg);
+            transform: translate(0, 31px) rotateX(0) rotateY(-180deg) rotateZ(45deg);
             -webkit-animation: barBottomOut 320ms forwards;
+            -moz-animation: barBottomOut 320ms forwards;
+            animation: barBottomOut 320ms forwards;
         }
 
         /*激活状态*/
         .menu:hover .menu-bg {
             background-color: #ffffff;
             -webkit-transition: all 400ms;
+            -moz-transition: all 400ms;
+            transition: all 400ms;
         }
         .menu:hover:before {
             -webkit-animation: circleActive 200ms forwards;
+            -moz-animation: circleActive 200ms forwards;
+            animation: circleActive 200ms forwards;
         }
 
         .menu:hover:after {
             opacity: 0;
             -webkit-transform: translate(0, -31px);
+            -moz-transform: translate(0, -31px);
+            transform: translate(0, -31px);
             -webkit-transition: all 320ms;
+            -moz-transition: all 320ms;
+            transition: all 320ms;
         }
 
         .menu:hover .bar-top {
             -webkit-animation: barTopActive 320ms forwards;
+            -moz-animation: barTopActive 320ms forwards;
+            animation: barTopActive 320ms forwards;
         }
         .menu:hover .bar-bottom {
             -webkit-animation: barBottomActive 320ms forwards;
+            -moz-animation: barBottomActive 320ms forwards;
+            animation: barBottomActive 320ms forwards;
         }
 
+        /*keyframes: circleActive*/
         @-webkit-keyframes circleActive {
             0 {
                 border-color: rgba(255, 255, 255, 0);
@@ -114,6 +145,21 @@
             }
         }
 
+        @-moz-keyframes circleActive {
+            0 {
+                border-color: rgba(255, 255, 255, 0);
+                -moz-transform: scale(1, 1);
+            }
+            50% {
+                border-color: rgba(255, 255, 255, 1);
+            }
+            100% {
+                border-color: rgba(255, 255, 255, 0);
+                -moz-transform: scale(2, 2);
+            }
+        }
+
+        /*keyframes: barTopActive*/
         @-webkit-keyframes barTopActive {
             0 {
                 -webkit-transform: rotateX(0) rotateY(0) rotateZ(0);
@@ -127,7 +173,20 @@
                 -webkit-transform: rotateX(0) rotateY(-180deg) rotateZ(-45deg) ;
             }
         }
-
+        @-moz-keyframes barTopActive {
+            0 {
+                -moz-transform: rotateX(0) rotateY(0) rotateZ(0);
+            }
+            50% {
+                -moz-transform: rotateX(0) rotateY(-90deg) rotateZ(-90deg);
+            }
+            100% {
+                background-color: #000;
+                box-shadow: 0 0 2px #000;
+                -moz-transform: rotateX(0) rotateY(-180deg) rotateZ(-45deg) ;
+            }
+        }
+        /*keyframes: barBottomActive*/
         @-webkit-keyframes barBottomActive {
             0 {
                 -webkit-transform: rotateX(0) rotateY(0) rotateZ(0);
@@ -141,8 +200,21 @@
                 -webkit-transform: rotateX(0) rotateY(-180deg) rotateZ(45deg);
             }
         }
+        @-moz-keyframes barBottomActive {
+            0 {
+                -moz-transform: rotateX(0) rotateY(0) rotateZ(0);
+            }
+            50% {
+                -moz-transform: rotateX(0) rotateY(-90deg) rotateZ(90deg);
+            }
+            100% {
+                background-color: #000;
+                box-shadow: 0 0 2px #000;
+                -moz-transform: rotateX(0) rotateY(-180deg) rotateZ(45deg);
+            }
+        }
 
-
+        /*keyframes: circleOut*/
         @-webkit-keyframes circleOut {
 	        0 {
 	            border-color: rgba(0, 0, 0, 0.5);
@@ -156,7 +228,21 @@
 	            -webkit-transform: scale(1.5, 1.5);
 	        }
         }
+        @-moz-keyframes circleOut {
+	        0 {
+	            border-color: rgba(0, 0, 0, 0.5);
+	            -moz-transform: scale(1, 1);
+	        }
+	        50% {
+	            border-color: rgba(0, 0, 0, 1);
+	        }
+	        100% {
+	            border-color: rgba(0, 0, 0, 0);
+	            -moz-transform: scale(1.5, 1.5);
+	        }
+        }
 
+        /*keyframes: barTopOut*/
         @-webkit-keyframes barTopOut {
 	        100% {
 	            -webkit-transform: rotateX(0) rotateY(0) rotateZ(0) translate(0, -31px);
@@ -168,7 +254,19 @@
 	            -webkit-transform: rotateX(0) rotateY(-180deg) rotateZ(-45deg) ;
 	        }
         }
+        @-moz-keyframes barTopOut {
+	        100% {
+	            -moz-transform: rotateX(0) rotateY(0) rotateZ(0) translate(0, -31px);
+	        }
+	        50% {
+	            -moz-transform: rotateX(0) rotateY(-90deg) rotateZ(-90deg);
+	        }
+	        0 {
+	            -moz-transform: rotateX(0) rotateY(-180deg) rotateZ(-45deg) ;
+	        }
+        }
 
+        /*keyframes: barBottomOut*/
         @-webkit-keyframes barBottomOut {
 	        100% {
 	            -webkit-transform: rotateX(0) rotateY(0) rotateZ(0) translate(0, 31px);
@@ -180,13 +278,22 @@
 	            -webkit-transform: rotateX(0) rotateY(-180deg) rotateZ(45deg) ;
 	        }
         }
+        @-moz-keyframes barBottomOut {
+	        100% {
+	            -moz-transform: rotateX(0) rotateY(0) rotateZ(0) translate(0, 31px);
+	        }
+	        50% {
+	            -moz-transform: rotateX(0) rotateY(-90deg) rotateZ(90deg);
+	        }
+	        0 {
+	            -moz-transform: rotateX(0) rotateY(-180deg) rotateZ(45deg) ;
+	        }
+        }
     </style>
 </head>
 <body>
-
-
 <div class="wrap">
-    <a class="menu menu-out" href="javascript:;">
+    <a class="menu" href="javascript:;">
     	<i class="menu-bg"></i>
         <i class="bar bar-top"></i>
         <i class="bar bar-bottom"></i>
