@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Clock</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+    .wrap-out {
+        position: relative;
+        width: 220px;
+        height: 220px;
+        margin: 200px auto;
+        transform: scale(2);
+    }
+    .wrap-out:before {
+        content: '';
+        position: absolute;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        border-top: 2px solid #fff;
+        border-radius: 50%;
+        transform: rotate(50deg);
+        filter: blur(1px);
+    }
+    .wrap {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        border: 10px solid #000;
+        border-radius: 50%;
+        box-shadow: -4px 4px 8px #666;
+        overflow: hidden;
+    }
+    .wrap:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        box-shadow: -5px 5px 5px #666 inset;
+        z-index: 1;
+    }
+    .panel-outer {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 400px;
+        width: 400px;
+        transform: translate(-100px, 35px) rotate(0deg);
+        animation: circle-panel-outer 60s linear infinite;
+        transform-origin: 200px 65px;
+    }
+    .panel {
+        position: absolute;
+        left: 0;
+        top: 0;
+        box-sizing: border-box;
+        height: 400px;
+        width: 400px;
+        border-radius: 50%;
+        animation: circle-panel 60s linear infinite;
+        animation-direction: reverse;
+    }
+    .scale {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 0;
+        height: 0;
+    }
+    .scale .hour {
+        display: none;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 2px;
+        height: 400px;
+        background: #f00;
+        transform: translate(-50%, -400px) rotate(0);
+        transform-origin: 1px 400px;
+        animation: circle calc(3600s * 24) linear infinite;
+    }
+    .scale .minute {
+        display: none;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 2px;
+        height: 400px;
+        background: #0f0;
+        transform: translate(-50%, -400px) rotate(0);
+        transform-origin: 1px 400px;
+        animation: circle 3600s steps(60) infinite;
+    }
+    .scale .second {
+        position: absolute;
+        z-index: 10;
+        left: 0;
+        top: 0;
+        width: 2px;
+        height: 400px;
+        background: #f80;
+        transform: translate(-50%, -400px) rotate(0);
+        transform-origin: 1px 400px;
+        animation: circle 60s linear infinite;
+        box-shadow: 0 0 5px #000;
+    }
+    @keyframes circle-panel-outer {
+        from {
+            transform: translate(-100px, 35px) rotate(0deg);
+        }
+        to {
+            transform: translate(-100px, 35px) rotate(360deg);
+        }
+    }
+    @keyframes circle-panel {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    @keyframes circle {
+        from {
+            transform: translate(-50%, -400px) rotate(0);
+            box-shadow: -2.5px 0 2.5px #000;
+        }
+        12.5% {
+            box-shadow: 0 0 0 #000;
+        }
+        37.5% {
+            box-shadow: 5px 0 5px #000;
+        }
+        62.5% {
+            box-shadow: 0 0 0 #000;
+        }
+        85% {
+            box-shadow: -5px 0 5px #000;
+        }
+        to {
+            transform: translate(-50%, -400px) rotate(360deg);
+            box-shadow: -2.5px 0 2.5px #000;
+        }
+    }
+    .scale .number {
+        position: absolute;
+        font-size: 22px;
+        color: #000;
+        transform: translate(-50%, -170px) rotate(calc(30deg * var(--index)));
+        transform-origin: center 170px;
+    }
+    .scale .number:before {
+        display: block;
+        content: attr(index);
+        transform: rotate(calc(-30deg * var(--index)));
+
+    }
+    .scale .number-1,
+    .scale .number-1:before {
+        --index: 1;
+    }
+    .scale .number-2,
+    .scale .number-2:before {
+        --index: 2;
+    }
+    .scale .number-3,
+    .scale .number-3:before {
+        --index: 3;
+    }
+    .scale .number-4,
+    .scale .number-4:before {
+        --index: 4;
+    }
+    .scale .number-5,
+    .scale .number-5:before {
+        --index: 5;
+    }
+    .scale .number-6,
+    .scale .number-6:before {
+        --index: 6;
+    }
+    .scale .number-7,
+    .scale .number-7:before {
+        --index: 7;
+    }
+    .scale .number-8,
+    .scale .number-8:before {
+        --index: 8;
+    }
+    .scale .number-9,
+    .scale .number-9:before {
+        --index: 9;
+    }
+    .scale .number-10,
+    .scale .number-10:before {
+        --index: 10;
+    }
+    .scale .number-11,
+    .scale .number-11:before {
+        --index: 11;
+    }
+    .scale .number-12,
+    .scale .number-12:before {
+        --index: 12;
+    }
+    .scale i {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 2px;
+        height: 5px;
+        background: #000;
+        transform: translate(-50%, -200px) rotate(calc(6deg * var(--rel) - 6deg));
+        transform-origin: 1px 200px;
+    }
+
+    .scale i:nth-of-type(5n + 1) {
+        height: 20px;
+    }
+    .scale i:nth-of-type(1) {
+        --rel: 1;
+    }
+    .scale i:nth-of-type(2) {
+        --rel: 2;
+    }
+    .scale i:nth-of-type(3) {
+        --rel: 3;
+    }
+    .scale i:nth-of-type(4) {
+        --rel: 4;
+    }
+    .scale i:nth-of-type(5) {
+        --rel: 5;
+    }
+    .scale i:nth-of-type(6) {
+        --rel: 6;
+    }
+    .scale i:nth-of-type(7) {
+        --rel: 7;
+    }
+    .scale i:nth-of-type(8) {
+        --rel: 8;
+    }
+    .scale i:nth-of-type(9) {
+        --rel: 9;
+    }
+    .scale i:nth-of-type(10) {
+        --rel: 10;
+    }
+    .scale i:nth-of-type(11) {
+        --rel: 11;
+    }
+    .scale i:nth-of-type(12) {
+        --rel: 12;
+    }
+    .scale i:nth-of-type(13) {
+        --rel: 13;
+    }
+    .scale i:nth-of-type(14) {
+        --rel: 14;
+    }
+    .scale i:nth-of-type(15) {
+        --rel: 15;
+    }
+    .scale i:nth-of-type(16) {
+        --rel: 16;
+    }
+    .scale i:nth-of-type(17) {
+        --rel: 17;
+    }
+    .scale i:nth-of-type(18) {
+        --rel: 18;
+    }
+    .scale i:nth-of-type(19) {
+        --rel: 19;
+    }
+    .scale i:nth-of-type(20) {
+        --rel: 20;
+    }
+    .scale i:nth-of-type(21) {
+        --rel: 21;
+    }
+    .scale i:nth-of-type(22) {
+        --rel: 22;
+    }
+    .scale i:nth-of-type(23) {
+        --rel: 23;
+    }
+    .scale i:nth-of-type(24) {
+        --rel: 24;
+    }
+    .scale i:nth-of-type(25) {
+        --rel: 25;
+    }
+    .scale i:nth-of-type(26) {
+        --rel: 26;
+    }
+    .scale i:nth-of-type(27) {
+        --rel: 27;
+    }
+    .scale i:nth-of-type(28) {
+        --rel: 28;
+    }
+    .scale i:nth-of-type(29) {
+        --rel: 29;
+    }
+    .scale i:nth-of-type(30) {
+        --rel: 30;
+    }
+    .scale i:nth-of-type(31) {
+        --rel: 31;
+    }
+    .scale i:nth-of-type(32) {
+        --rel: 32;
+    }
+    .scale i:nth-of-type(33) {
+        --rel: 33;
+    }
+    .scale i:nth-of-type(34) {
+        --rel: 34;
+    }
+    .scale i:nth-of-type(35) {
+        --rel: 35;
+    }
+    .scale i:nth-of-type(36) {
+        --rel: 36;
+    }
+    .scale i:nth-of-type(37) {
+        --rel: 37;
+    }
+    .scale i:nth-of-type(38) {
+        --rel: 38;
+    }
+    .scale i:nth-of-type(39) {
+        --rel: 39;
+    }
+    .scale i:nth-of-type(40) {
+        --rel: 40;
+    }
+    .scale i:nth-of-type(41) {
+        --rel: 41;
+    }
+    .scale i:nth-of-type(42) {
+        --rel: 42;
+    }
+    .scale i:nth-of-type(43) {
+        --rel: 43;
+    }
+    .scale i:nth-of-type(44) {
+        --rel: 44;
+    }
+    .scale i:nth-of-type(45) {
+        --rel: 45;
+    }
+    .scale i:nth-of-type(46) {
+        --rel: 46;
+    }
+    .scale i:nth-of-type(47) {
+        --rel: 47;
+    }
+    .scale i:nth-of-type(48) {
+        --rel: 48;
+    }
+    .scale i:nth-of-type(49) {
+        --rel: 49;
+    }
+    .scale i:nth-of-type(50) {
+        --rel: 50;
+    }
+    .scale i:nth-of-type(51) {
+        --rel: 51;
+    }
+    .scale i:nth-of-type(52) {
+        --rel: 52;
+    }
+    .scale i:nth-of-type(53) {
+        --rel: 53;
+    }
+    .scale i:nth-of-type(54) {
+        --rel: 54;
+    }
+    .scale i:nth-of-type(55) {
+        --rel: 55;
+    }
+    .scale i:nth-of-type(56) {
+        --rel: 56;
+    }
+    .scale i:nth-of-type(57) {
+        --rel: 57;
+    }
+    .scale i:nth-of-type(58) {
+        --rel: 58;
+    }
+    .scale i:nth-of-type(59) {
+        --rel: 59;
+    }
+    .scale i:nth-of-type(60) {
+        --rel: 60;
+    }
+    </style>
+</head>
+<body>
+    <div class="wrap-out">
+        <div class="wrap">
+            <div class="panel-outer">
+                <div class="panel">
+                    <div class="scale">
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <div class="hour"></div>
+                        <div class="minute"></div>
+                        <div class="second"></div>
+                        <div class="number number-1" index="1"></div>
+                        <div class="number number-2" index="2"></div>
+                        <div class="number number-3" index="3"></div>
+                        <div class="number number-4" index="4"></div>
+                        <div class="number number-5" index="5"></div>
+                        <div class="number number-6" index="6"></div>
+                        <div class="number number-7" index="7"></div>
+                        <div class="number number-8" index="8"></div>
+                        <div class="number number-9" index="9"></div>
+                        <div class="number number-10" index="10"></div>
+                        <div class="number number-11" index="11"></div>
+                        <div class="number number-12" index="12"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
